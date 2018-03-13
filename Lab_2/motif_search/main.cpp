@@ -6,7 +6,6 @@
 
 void increase_start_position(std::vector<int> & vector, int max_value){
     unsigned int position = 0;
-//    std::cout << max_value << std::endl;
     while (true) {
         if (position > vector.size()){
             std::cout << "Out of range increase" << std::endl;
@@ -27,7 +26,6 @@ int Score(std::vector<int> & start_positions,  std::vector<std::string>& dataset
     int profile_matrix[template_size][4] = {0};
     for (int i = 0; i < dataset.size(); ++i) {
         for (int j = 0; j < template_size; ++j) {
-//            std::cout << i << " " << j << std::endl;
             switch (dataset[i][start_positions[i] + j]) {
                 case 'A':
                     ++profile_matrix[j][0];

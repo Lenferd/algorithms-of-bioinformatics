@@ -5,13 +5,6 @@
 #include <cmath>
 #include <climits>
 
-enum symbols{
-    SYMB_A = 0,
-    SYMB_C,
-    SYMB_G,
-    SYMB_T
-};
-
 // Looks like a mountain of garbage. Yep, that's it is
 void next_word(std::string & word) {
     unsigned int position = 0;
@@ -59,8 +52,7 @@ int Distance(std::string & line, std::string& templ) {
     return minimal_distance;
 }
 
-int TotalDistance(std::vector<std::string>& dataset, std::string & word,
-                  unsigned int line_length) {
+int TotalDistance(std::vector<std::string>& dataset, std::string & word) {
     int total_distance = 0;
     for (int i = 0; i < dataset.size(); ++i) {
         total_distance += Distance(dataset[i], word);
@@ -79,7 +71,6 @@ int main() {
     // Init variables
     unsigned int template_size;
     unsigned int amount_of_lines = 0;
-    unsigned int line_length;
 
     int best_distance = INT_MAX;
 
@@ -97,10 +88,8 @@ int main() {
     std::string word(template_size, 'A');
     std::string best_word(template_size, 'A');
 
-    line_length = static_cast<unsigned int>(dataset[0].size());
-
     for (int i = 0; i < pow(4, template_size) - 1; ++i){
-        int temp_distance = TotalDistance(dataset, word, line_length);
+        int temp_distance = TotalDistance(dataset, word);
         if (temp_distance < best_distance) {
             best_distance = temp_distance;
             best_word = word;

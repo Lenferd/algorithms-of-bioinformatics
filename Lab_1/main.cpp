@@ -31,7 +31,7 @@ int main() {
     std::ifstream infile("input.txt");
     if (!infile || infile.peek() == std::ifstream::traits_type::eof()) {
         std::cout << "File not found or is empty" << std::endl;
-        return -1;
+        exit(-1);
     }
 
     infile >> dataset;
@@ -43,7 +43,7 @@ int main() {
         std::string base_str = dataset.substr(i, k);
         unsigned str_frequency = 1u;
         for (int j = i + 1; j < dataset.size() - k + 1; ++j) {
-            if (!base_str.compare(dataset.substr(j,k))) {
+            if (base_str == dataset.substr(j,k)) {
                 str_frequency++;
             }
         }
