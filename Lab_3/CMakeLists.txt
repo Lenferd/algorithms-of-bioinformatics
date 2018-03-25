@@ -1,0 +1,4 @@
+get_filename_component(LAB_NAME ${CMAKE_CURRENT_LIST_DIR} NAME)
+
+add_subdirectory(branch_bound_median_string)
+add_subdirectory(branch_bound_motif_search)
