@@ -15,7 +15,7 @@ int ManhattanTourist(std::vector<int> &south_weight, std::vector<int> &west_weig
                 vertex_weight[IND_VERT(i - 1, 0)] + south_weight[IND_SO_W(i - 1, 0)];
     }
 
-    for (int i = 0; i <= m ; ++i) {
+    for (int i = 1; i <= m ; ++i) {
         vertex_weight[IND_VERT(0, i)] =
                 vertex_weight[IND_VERT(0, i - 1)] + west_weight[IND_WE_W(0, i - 1)];
     }
