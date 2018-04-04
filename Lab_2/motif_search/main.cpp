@@ -88,7 +88,7 @@ int main() {
 
     line_length = static_cast<unsigned int>(dataset[0].size());
 
-    for (int i = 0; i < pow(line_length - template_size + 1, amount_of_lines) - 1; ++i) {
+    for (int i = 0; i < pow(line_length - template_size + 1, amount_of_lines); ++i) {
         int temp_score = 0;
         temp_score = Score(start_positions, dataset, template_size);
         if (temp_score > score) {
