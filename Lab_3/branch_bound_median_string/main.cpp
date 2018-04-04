@@ -37,7 +37,7 @@ unsigned int Distance(std::string & line, std::string& templ, unsigned int level
     unsigned int minimal_distance = INT_MAX;
     for (int i = 0; i < line.size() - templ.size() + 1; ++i) {
         unsigned int distance = 0;
-        for (int j = 0; j <= level; ++j) {
+        for (int j = 0; j < level; ++j) {
             if (line[i + j] != templ[j]){
                 ++distance;
             }
@@ -63,7 +63,6 @@ std::string branch_and_bound_median_string_search(std::vector<std::string> datas
     std::vector<unsigned int> word(template_size, 0);
     std::vector<unsigned int> best_word(template_size, 0);
 
-    word[0] = 2;
     unsigned int best_distance = INT_MAX;
 
     unsigned int level = 1;
