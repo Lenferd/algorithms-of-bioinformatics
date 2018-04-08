@@ -28,5 +28,12 @@
 
 [Global aligment](Lab_5/global_alignment)
 
-
 [Local aligment](Lab_5/local_alignment)
+
+## Lab_6
+
+[String spectre](Lab_6/string_spectre)
+
+[Overlap graph construct](Lab_6/overlap_graph_construct)
+
+[De bruijn graph](Lab_6/de_bruijn_graph)
