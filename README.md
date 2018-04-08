@@ -27,3 +27,6 @@
 ## Lab_5
 
 [Global aligment](Lab_5/global_alignment)
+
+
+[Local aligment](Lab_5/local_alignment)
