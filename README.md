@@ -23,3 +23,7 @@
 [Longest common substring](Lab_4/longest_common_substring)
 
 [Manhattan tourist](Lab_4/manhattan_tourist)
+
+## Lab_5
+
+[Global aligment](Lab_5/global_alignment)
