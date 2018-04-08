@@ -1,3 +1,4 @@
 get_filename_component(LAB_NAME ${CMAKE_CURRENT_LIST_DIR} NAME)
 
 add_subdirectory(string_spectre)
+add_subdirectory(overlap_graph_construct)
