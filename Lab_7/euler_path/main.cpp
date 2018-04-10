@@ -6,6 +6,7 @@
 #include <stack>
 #include <list>
 #include <algorithm>
+#include <set>
 
 enum t_Errors {
     ALL_OK,
@@ -14,7 +15,7 @@ enum t_Errors {
 
 class Graph_vert {
 public:
-    uint vert;
+    uint vert{};
     std::vector<uint> child_vert;
 
     explicit Graph_vert() = default;
@@ -37,10 +38,6 @@ public:
         return ALL_OK;
     }
 
-    unsigned long get_child_size() {
-        return this->child_vert.size();
-    }
-
     friend bool operator==(const Graph_vert& left, const Graph_vert& right) {
         if (left.vert == right.vert && left.child_vert.size() == right.child_vert.size()) {
             return true;
@@ -48,7 +45,7 @@ public:
     };
 };
 
-void split_str(const std::string source, uint & vertex, std::vector<uint> & child_vert) {
+void split_str(const std::string& source, uint & vertex, std::vector<uint> & child_vert) {
     std::istringstream is(source);
     std::string temp;
 
@@ -80,6 +77,26 @@ void read_graph(std::list<Graph_vert>& overlap_graph) {
             overlap_graph.emplace_back(Graph_vert(vertex, child_vert));
         }
     }
+
+    // Check is all child is vertex or add it
+
+    std::set<uint> all_childs;
+    for (const auto& it: overlap_graph) {
+        for (const auto& child : it.child_vert) {
+            all_childs.insert(child);
+        }
+    }
+
+    for (const auto& child: all_childs) {
+        for (auto it = overlap_graph.begin(); it != overlap_graph.end(); it++) {
+            if (it->vert == child) {
+                break;
+            } else if (it == --overlap_graph.end()) {
+                overlap_graph.emplace_back(Graph_vert(child));
+            }
+        }
+    }
+
 }
 
 void EulerianCycle(std::list<Graph_vert>& overlap_graph, std::vector<uint> &result) {
@@ -89,7 +106,7 @@ void EulerianCycle(std::list<Graph_vert>& overlap_graph, std::vector<uint> &resu
 
     while (!stack.empty()) {
         Graph_vert* vert = stack.top();
-        if (vert->get_child_size() == 0) {
+        if (vert->child_vert.empty()) {
             result.push_back(vert->vert);
             stack.pop();
         } else {
@@ -105,11 +122,24 @@ void EulerianCycle(std::list<Graph_vert>& overlap_graph, std::vector<uint> &resu
     }
 }
 
+void get_rate(std::list<Graph_vert>& overlap_graph,
+              std::map<uint, uint>& vertex_grade_in,
+              std::map<uint, uint>& vertex_grade_out) {
+    for (const auto& it : overlap_graph) {
+        if (!it.child_vert.empty()) {
+            for (int i = 0; i < it.child_vert.size(); ++i) {
+                ++vertex_grade_out[it.vert];
+                ++vertex_grade_in[it.child_vert[i]];
+            }
+        }
+    }
+}
+
 int main() {
     std::list<Graph_vert> overlap_graph;
     read_graph(overlap_graph);
 
-//    for (auto &it : overlap_graph) {
+//        for (auto &it : overlap_graph) {
 //        std::cout << it.vert << " -> ";
 //        for (int i = 0; i < it.child_vert.size(); ++i) {
 //            std::cout << it.child_vert[i];
@@ -120,21 +150,70 @@ int main() {
 //        std::cout << std::endl;
 //    }
 
+
+    std::map<uint, uint> vertex_grade_in, vertex_grade_out;
+    get_rate(overlap_graph, vertex_grade_in, vertex_grade_out);
+//    for (const auto& it: vertex_grade_out) {
+//        std::cout << it.first <<" " << it.second  << std::endl;
+//    }
+//    std::cout << "in" << std::endl;
+//    for (const auto& it: vertex_grade_in) {
+//        std::cout << it.first <<" " << it.second  << std::endl;
+//    }
+
+    std::vector<std::tuple<uint, uint>> pairs;
+    for (const auto& out_it : vertex_grade_out) {
+        if (out_it.second > vertex_grade_in[out_it.first]) {
+            for (const auto& in_it : vertex_grade_in) {
+                if (in_it.second > vertex_grade_out[in_it.first]) {
+                    for (auto & item : overlap_graph) {
+                        if (item.vert == in_it.first) {
+                            item.child_vert.push_back(out_it.first);
+                            ++vertex_grade_in[out_it.first];
+                            ++vertex_grade_out[in_it.first];
+                            pairs.push_back(std::make_tuple(in_it.first, out_it.first));
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
     std::vector<uint> result;
     EulerianCycle(overlap_graph, result);
 
     std::reverse(result.begin(), result.end());
-//    for (int j = 0; j < result.size(); ++j) {
-//        std::cout << result[j] ;
-//        if (j < result.size() - 1)
+
+    std::vector<uint> realresult;
+
+    if (pairs.size() > 1) {
+        std::cout << "Not valid situation "<< std::endl;
+        return -1;
+    }
+
+    for (int i = 0; i < result.size() - 1; ++i) {
+        if (pairs.empty())
+            break;
+        if (result[i] == std::get<0>(pairs[0]) && result[i+1] == std::get<1>(pairs[0])) {
+            realresult.assign(&result[i + 1], &result[result.size()]);
+            realresult.insert(realresult.end(), &result[0], &result[i]);
+            break;
+        }
+    }
+
+//    for (int j = 0; j < realresult.size(); ++j) {
+//        std::cout << realresult[j] ;
+//        if (j < realresult.size() - 1)
 //            std::cout << "->";
 //    }
 //    std::cout << std::endl;
 
     std::ofstream outfile("output.txt");
-    for (int j = 0; j < result.size(); ++j) {
-        outfile << result[j] ;
-        if (j < result.size() - 1)
+    for (int j = 0; j < realresult.size(); ++j) {
+        outfile << realresult[j] ;
+        if (j < realresult.size() - 1)
             outfile << "->";
     }
     outfile << std::endl;
