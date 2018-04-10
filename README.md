@@ -37,3 +37,11 @@
 [Overlap graph construct](Lab_6/overlap_graph_construct)
 
 [De bruijn graph](Lab_6/de_bruijn_graph)
+
+## Lab_7
+
+[Euler cycle](Lab_7/euler_cycle)
+
+[Euler path](Lab_7/euler_path)
+
+[Assembly of genome](Lab_7/assembly_of_genome)
