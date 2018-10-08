@@ -1,5 +1,7 @@
 import unittest
 from pattern_count_problem import pattern_count
+from frequent_words_problem import count_frequency
+
 
 class PatternCountProblemTests(unittest.TestCase):
     def test_case_default(self):
@@ -19,6 +21,25 @@ class PatternCountProblemTests(unittest.TestCase):
         genome = "AAAAAAAA"
         expected = 5
         self.assertEqual(pattern_count(pattern=patter, str=genome), expected)
+
+class FrequentWordsProblemTests(unittest.TestCase):
+    def test_case_default(self):
+        k = 4
+        genome = "ACGTTGCATGTCGCATGATGCATGAGAGCT"
+        expected = "CATG GCAT"
+        self.assertCountEqual(count_frequency(text=genome, k=k), expected)
+
+    def test_case_end(self):
+        k = 4
+        genome = "ATGGGTTGLTGAATTGLGAGATCGACTTGLGTTAACTTGGGCTCAGGTTGL"
+        expected = "TTGL"
+        self.assertCountEqual(count_frequency(text=genome, k=k), expected)
+
+    def test_case_many_overlay(self):
+        k = 4
+        genome = "AAAAAAAABBBBABBBBABBBBB"
+        expected = "AAAA"
+        self.assertCountEqual(count_frequency(text=genome, k=k), expected)
 
 if __name__ == '__main__':
     unittest.main()

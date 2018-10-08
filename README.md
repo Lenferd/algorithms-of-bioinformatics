@@ -3,6 +3,9 @@
 ## Lab 1
 [Pattern Count Problem](Python/Lab_1/pattern_count_problem.py)
 
+[Frequent Words Problem](Python/Lab_1/frequent_words_problem.py)
+
+
 # C++ realization
 ## Lab_1
 
