@@ -5,6 +5,7 @@
 
 [Frequent Words Problem](Python/Lab_1/frequent_words_problem.py)
 
+[Reverse Complement Problem](Python/Lab_1/reverse_complement_problem.py)
 
 # C++ realization
 ## Lab_1

@@ -1,7 +1,7 @@
 import unittest
 from pattern_count_problem import pattern_count
 from frequent_words_problem import count_frequency
-
+from reverse_complement_problem import reverse_complement
 
 class PatternCountProblemTests(unittest.TestCase):
     def test_case_default(self):
@@ -22,6 +22,7 @@ class PatternCountProblemTests(unittest.TestCase):
         expected = 5
         self.assertEqual(pattern_count(pattern=patter, str=genome), expected)
 
+
 class FrequentWordsProblemTests(unittest.TestCase):
     def test_case_default(self):
         k = 4
@@ -41,5 +42,13 @@ class FrequentWordsProblemTests(unittest.TestCase):
         expected = "AAAA"
         self.assertCountEqual(count_frequency(text=genome, k=k), expected)
 
+
+class ReverseComplementProblem(unittest.TestCase):
+    def test_case_default(self):
+        input = "AAAACCCGGT"
+        expected = "ACCGGGTTTT"
+        self.assertEqual(reverse_complement(input), expected)
+
+        
 if __name__ == '__main__':
     unittest.main()
